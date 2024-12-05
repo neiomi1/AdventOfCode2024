@@ -1,8 +1,8 @@
 use std::{cmp::Ordering, collections::HashMap};
 
 #[inline]
-fn parse(input: &str) -> (HashMap<i32, (Vec<i32>, Vec<i32>)>, Vec<Vec<i32>>) {
-    let mut mapping: HashMap<i32, (Vec<i32>, Vec<i32>)> = HashMap::new();
+fn parse(input: &str) -> (HashMap<i32, Vec<i32>>, Vec<Vec<i32>>) {
+    let mut mapping: HashMap<i32, Vec<i32>> = HashMap::new();
     let mut updates :  Vec<Vec<i32>> = vec![];
 
     input
@@ -12,10 +12,8 @@ fn parse(input: &str) -> (HashMap<i32, (Vec<i32>, Vec<i32>)>, Vec<Vec<i32>>) {
                 let (before, after) = line.split_once("|").expect("should have split");
                 let before = before.parse().expect("should have been number");
                 let after = after.parse().expect("should have been number");
-                let entry : &mut (Vec<i32>, Vec<i32>) = mapping.entry(before).or_insert((vec![], vec![]));
-                entry.1.push(after);
-                let entry : &mut (Vec<i32>, Vec<i32>) = mapping.entry(after).or_insert((vec![], vec![]));
-                entry.0.push(before);
+                let entry : &mut Vec<i32> = mapping.entry(before).or_insert( vec![]);
+                entry.push(after);
             }
             if line.contains(","){
                 updates.push(line.split(",").map(|part| part.parse().expect("should have been number")).collect());
@@ -25,12 +23,12 @@ fn parse(input: &str) -> (HashMap<i32, (Vec<i32>, Vec<i32>)>, Vec<Vec<i32>>) {
     (mapping, updates)
 }
 
-fn qualify_update(order : &HashMap<i32, (Vec::<i32>, Vec::<i32>)>, update : &Vec<i32>) -> bool{
+fn qualify_update(order : &HashMap<i32,Vec::<i32>>, update : &Vec<i32>) -> bool{
     for i in 0..update.len(){
         let current = update[i];
         
         for j in i..update.len(){
-            if order[&update[j]].1.contains(&current){
+            if order[&update[j]].contains(&current){
                 return false
             }
         }
@@ -38,13 +36,13 @@ fn qualify_update(order : &HashMap<i32, (Vec::<i32>, Vec::<i32>)>, update : &Vec
     true
 }
 
-fn fix_update(order : &HashMap<i32, (Vec::<i32>, Vec::<i32>)>, update : &mut Vec<i32>) -> bool{
+fn fix_update(order : &HashMap<i32, Vec::<i32>>, update : &mut Vec<i32>) -> bool{
     let mut modified = false;
     for i in 0..update.len(){
         let mut current = update[i];
         
         for j in i..update.len(){
-            if order[&update[j]].1.contains(&current){
+            if order[&update[j]].contains(&current){
                 update.swap(i, j);
                 current = update[i];
                 modified = true;
