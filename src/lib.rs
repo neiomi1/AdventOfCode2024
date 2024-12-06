@@ -3,6 +3,7 @@ pub mod day02;
 pub mod day03;
 pub mod day04;
 pub mod day05;
+pub mod day06;
 
 #[macro_export]
 macro_rules! aoctest {
@@ -37,4 +38,18 @@ macro_rules! aoctest {
             }
         }
     };
+}
+
+#[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
+enum Directions{
+    UP,
+    LEFT,
+    RIGHT,
+    DOWN
+}
+
+#[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
+struct Point {
+    x: i32,
+    y: i32
 }

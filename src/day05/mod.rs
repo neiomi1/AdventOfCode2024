@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, collections::HashMap};
+use std::collections::HashMap;
 
 #[inline]
 fn parse(input: &str) -> (HashMap<i32, Vec<i32>>, Vec<Vec<i32>>) {
@@ -28,7 +28,7 @@ fn qualify_update(order : &HashMap<i32,Vec::<i32>>, update : &Vec<i32>) -> bool{
         let current = update[i];
         
         for j in i..update.len(){
-            if order[&update[j]].contains(&current){
+            if order.contains_key(&update[j]) && order[&update[j]].contains(&current){
                 return false
             }
         }
@@ -42,7 +42,7 @@ fn fix_update(order : &HashMap<i32, Vec::<i32>>, update : &mut Vec<i32>) -> bool
         let mut current = update[i];
         
         for j in i..update.len(){
-            if order[&update[j]].contains(&current){
+            if order.contains_key(&update[j]) && order[&update[j]].contains(&current){
                 update.swap(i, j);
                 current = update[i];
                 modified = true;
