@@ -4,6 +4,7 @@ pub mod day03;
 pub mod day04;
 pub mod day05;
 pub mod day06;
+pub mod day07;
 
 #[macro_export]
 macro_rules! aoctest {
@@ -52,4 +53,12 @@ enum Directions{
 struct Point {
     x: i32,
     y: i32
+}
+
+pub fn concat_numbers(a : i64, b : i64) -> i64{
+    let mut pow = 10;
+    while b >= pow{
+        pow *= 10;
+    }
+    return a * pow + b;
 }
