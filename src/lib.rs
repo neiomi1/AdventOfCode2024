@@ -5,6 +5,7 @@ pub mod day04;
 pub mod day05;
 pub mod day06;
 pub mod day07;
+pub mod day08;
 
 #[macro_export]
 macro_rules! aoctest {
@@ -53,6 +54,16 @@ enum Directions{
 struct Point {
     x: i32,
     y: i32
+}
+
+impl Point {
+    fn distance(&self, other : &Point) -> Point {
+        return Point{ x: self.x - other.x, y : self.y - other.y};
+    }
+
+    fn in_bounds(&self, bounds : &(i32, i32)) -> bool{
+        return self.x >= 0 && self.x < bounds.0 && self.y >= 0 && self.y < bounds.1
+    }
 }
 
 pub fn concat_numbers(a : i64, b : i64) -> i64{
