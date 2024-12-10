@@ -1,3 +1,5 @@
+use std::ops::Add;
+
 pub mod day01;
 pub mod day02;
 pub mod day03;
@@ -7,6 +9,7 @@ pub mod day06;
 pub mod day07;
 pub mod day08;
 pub mod day09;
+pub mod day10;
 
 #[macro_export]
 macro_rules! aoctest {
@@ -43,6 +46,13 @@ macro_rules! aoctest {
     };
 }
 
+pub const UP : Point = Point::new(0, -1);
+pub const DOWN : Point = Point::new(0, 1);
+pub const LEFT : Point = Point::new(-1, 0);
+pub const RIGHT : Point = Point::new(1, 0);
+
+pub const ORTHOGONAL : [Point; 4] = [UP, RIGHT, DOWN, LEFT];
+
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
 enum Directions{
     UP,
@@ -52,18 +62,29 @@ enum Directions{
 }
 
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
-struct Point {
+pub struct Point {
     x: i32,
     y: i32
 }
 
 impl Point {
+    const fn new (x : i32, y : i32) -> Point{
+        Point{x,y}
+    }
     fn distance(&self, other : &Point) -> Point {
         return Point{ x: self.x - other.x, y : self.y - other.y};
     }
 
     fn in_bounds(&self, bounds : &(i32, i32)) -> bool{
         return self.x >= 0 && self.x < bounds.0 && self.y >= 0 && self.y < bounds.1
+    }
+}
+
+impl Add for Point{
+    type Output = Point;
+
+    fn add(self, other: Point) -> Point{
+        Point { x: self.x + other.x, y: self.y + other.y }
     }
 }
 
