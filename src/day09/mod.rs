@@ -81,7 +81,7 @@ fn format_disk_fragmentation(files : &Vec<Block>) -> Vec<Block>{
 }
 
 fn format_disk_no_fragmentation(files : &Vec<Block>) -> Vec<Block>{
-    let disk_length = &files.last().unwrap().stop_index;
+    // let disk_length = &files.last().unwrap().stop_index;
     let mut formatted_disk = files.clone();
     let mut i = formatted_disk.len()-1;
     loop{
@@ -142,7 +142,7 @@ fn checksum(files : &Vec<Block>) -> u64{
 #[inline]
 pub fn part1(input: &str) -> u64 {
     let disk = parse(input);
-    let disk_length = &disk.last().unwrap().stop_index;
+    // let disk_length = &disk.last().unwrap().stop_index;
     // print_disk(&disk, disk_length);
 
     let formatted_disk = format_disk_fragmentation(&disk);
@@ -154,7 +154,7 @@ pub fn part1(input: &str) -> u64 {
 #[inline]
 pub fn part2(input: &str) -> u64{
     let disk = parse(input);
-    let disk_length = &disk.last().unwrap().stop_index;
+    // let disk_length = &disk.last().unwrap().stop_index;
     // print_disk(&disk, disk_length);
 
     let formatted_disk = format_disk_no_fragmentation(&disk);

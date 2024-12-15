@@ -1,4 +1,4 @@
-use std::ops::{self, Add, Mul};
+use std::ops::{self, Add};
 
 pub mod day01;
 pub mod day02;
@@ -14,6 +14,7 @@ pub mod day11;
 pub mod day12;
 pub mod day13;
 pub mod day14;
+pub mod day15;
 
 #[macro_export]
 macro_rules! aoctest {
@@ -83,6 +84,10 @@ impl Point {
         return self.x >= 0 && self.x < bounds.0 && self.y >= 0 && self.y < bounds.1
     }
 
+    fn check_bounds(&self, bounds : &Point) -> bool{
+        return self.x >= 0 && self.x < bounds.x && self.y >= 0 && self.y < bounds.y
+    }
+
     fn wrap(&self, bounds : &Point) -> Point{
         Point::new(self.x.rem_euclid(bounds.x),self.y.rem_euclid(bounds.y))
     }
@@ -94,8 +99,16 @@ impl Add for Point{
     fn add(self, other: Point) -> Point{
         Point { x: self.x + other.x, y: self.y + other.y }
     }
-    
 }
+
+impl Add for &Point{
+    type Output = Point;
+
+    fn add(self, other: &Point) -> Point{
+        Point { x: self.x + other.x, y: self.y + other.y }
+    }
+}
+
 
 impl ops::Mul<i32> for &Point {
     type Output = Point;

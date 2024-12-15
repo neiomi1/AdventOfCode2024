@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use crate::{Directions, Point};
 
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
